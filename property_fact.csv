@@ -1,0 +1,11 @@
+addressLine1,city,state,zipCode,formattedAddress,squareFootage,yearBuilt,bathrooms,bedrooms,lotSize,propertyType,longitude,latitude
+39 Brookside Loop,Staten Island,NY,10309,"39 Brookside Loop, Staten Island, NY 10309",2600.0,2011.0,0.0,0.0,4792.0,Duplex-Triplex,-74.214711,40.539264
+12226 Jupiter Rd,Dallas,TX,75218,"12226 Jupiter Rd, Dallas, TX 75218",1424.0,1953.0,1.5,4.0,7542.0,Single Family,-96.682812,32.861838
+4530 Lighthouse Cir,Orlando,FL,32808,"4530 Lighthouse Cir, Orlando, FL 32808",0.0,1981.0,2.0,0.0,0.0,Single Family,-81.444549,28.6006
+221 Scott Ave,Fayetteville,NC,28301,"221 Scott Ave, Fayetteville, NC 28301",3016.0,1941.0,4.0,8.0,17860.0,Duplex-Triplex,-78.885794,35.080796
+1486 Old Janal Ranch Rd,Chula Vista,CA,91915,"1486 Old Janal Ranch Rd, Chula Vista, CA 91915",2358.0,2004.0,2.5,4.0,7131.0,Single Family,-116.940505,32.634786
+109 1/2 E King St,Garrett,IN,46738,"109 1/2 E King St, Garrett, IN 46738",0.0,0.0,1.0,2.0,0.0,Condo,-85.135124,41.350285
+16607 Valerio St,Van Nuys,CA,91406,"16607 Valerio St, Van Nuys, CA 91406",1133.0,1951.0,1.0,2.0,6036.0,Single Family,-118.494983,34.205025
+60 E Apollo Way,Sandy,UT,84070,"60 E Apollo Way, Sandy, UT 84070",960.0,0.0,2.0,3.0,0.0,unknown,-111.888589,40.597476
+718 W 12th St S,Newton,IA,50208,"718 W 12th St S, Apt A, Newton, IA 50208",0.0,0.0,0.0,0.0,0.0,unknown,-93.067158,41.692486
+4900 S Rio Grande Ave,Orlando,FL,32839,"4900 S Rio Grande Ave, Apt 16A, Orlando, FL 32839",0.0,0.0,0.0,0.0,0.0,unknown,-81.400579,28.489655

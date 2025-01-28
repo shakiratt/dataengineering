@@ -1,0 +1,204 @@
+# Import all importables
+import http.client
+import json
+import pandas as pd
+import csv
+import psycopg2
+# Call API
+import requests
+url = "https://realty-mole-property-api.p.rapidapi.com/randomProperties"
+
+querystring = {"limit":"1000"}
+
+headers = {
+	"x-rapidapi-key": "bc68487461mshca1d2214a6e1c46p1c3c47jsn5f4df3a84144",
+	"x-rapidapi-host": "realty-mole-property-api.p.rapidapi.com"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())
+data= response.json()
+#Saving into a file
+filename = "PropertyRecords.json"
+with open(filename,"w") as file:
+    json.dump(data,file,indent=4)
+
+#Read into a dataframe
+Propertyrecord_df = pd.read_json('PropertyRecords.json')
+
+Propertyrecord_df['features']=Propertyrecord_df ['features'].apply(json.dumps)
+
+#fill missing nd NA values
+Propertyrecord_df.fillna(
+    {
+        'bathrooms': 0,
+        'bedrooms': 0,
+        'squareFootage': 0, 
+        'county': "Not Available", 
+        'propertyType': "unknown",
+        'addressLine1': "unknown",
+        'city': "unknown", 
+        'state': "unknown", 
+        'zipCode': "unknown", 
+        'formattedAddress': "Not Available",
+        'yearBuilt': 0, 
+        'features': "unknown", 
+        'assessorID': "unknown", 
+        'legalDescription': "Not Available",
+        'subdivision': "Not Available", 
+        'ownerOccupied': 0, 
+        'lotSize': 0, 
+        'taxAssessment': "Not Available",
+        'propertyTaxes': "Not Available", 
+        'lastSaleDate': "Not Available", 
+        'lastSalePrice': 0, 
+        'owner': "unknown", 
+        'id': "unknown",
+        'longitude': "unknown", 
+        'latitude': "unknown", 
+        'zoning': "unknown", 
+        'addressLine2': "Not Available"
+    },
+    inplace=True
+)
+
+#create the FACT Table
+fact_columns =['addressLine1','city', 'state','zipCode', 'formattedAddress',  'squareFootage', 'yearBuilt', 'bathrooms', 'bedrooms', 'lotSize', 'propertyType',
+                'longitude', 'latitude']
+fact_table = Propertyrecord_df[fact_columns]
+fact_table.to_csv(r'C:\Users\HP\Documents\Data Engineering Projects\property_fact.csv', index=False)
+
+#Create Location Dimension
+Location_dim= Propertyrecord_df[['addressLine1','city', 'state','zipCode','county','longitude', 'latitude']].drop_duplicates().reset_index(drop=True)
+Location_dim.index.name= 'location_id'
+Location_dim.to_csv(r'C:\Users\HP\Documents\Data Engineering Projects\Location_dimension.csv', index=True)
+
+
+#Create Sales Dimension
+sales_dim = Propertyrecord_df[['lastSalePrice','lastSaleDate']].drop_duplicates().reset_index(drop=True)
+sales_dim.index.name= 'sales_id'
+sales_dim.to_csv(r'C:\Users\HP\Documents\Data Engineering Projects\sales_dimension.csv', index=False)
+
+#Create Property Features Dimension
+features_dim = Propertyrecord_df[['features', 'propertyType', 'zoning']].drop_duplicates().reset_index(drop=True)
+features_dim.index.name ='features_id'
+features_dim.to_csv(r'C:\Users\HP\Documents\Data Engineering Projects\features_dimension.csv', index=True)
+
+#Loading Layer
+# develop a function to connect to pgadmin
+def get_db_connection():
+    connection = psycopg2.connect(
+        host= 'localhost',
+        database='postgres',
+        user='postgres',
+        password='shakirat12'
+    )
+    return connection
+# create Tables
+conn = get_db_connection()
+def create_tables():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    create_table_query='''CREATE SCHEMA IF NOT EXISTS zapbank;
+
+                            DROP TABLE IF EXISTS zapbank.fact_table;
+                            DROP TABLE IF EXISTS zapbank.location_dim;
+                            DROP TABLE IF EXISTS zapbank.sales_dim;
+                            DROP TABLE IF EXISTS zapbank.features_dim;
+
+                            CREATE TABLE zapbank.fact_table(
+                                addressline1 VARCHAR(255),
+                                city VARCHAR(100),
+                                state VARCHAR(50),
+                                zipCode INTEGER,
+                                formattedAddress VARCHAR(255),
+                                squareFootage FLOAT,
+                                yearBuilt FLOAT,
+                                bathrooms FLOAT,
+                                bedrooms FLOAT,
+                                lotSize FLOAT,
+                                propertyType VARCHAR(255),
+                                longitude FLOAT,
+                                latitude FLOAT
+                                );
+
+                            CREATE TABLE zapbank.location_dim(
+                                    location_id SERIAL PRIMARY KEY,
+                                    addressLine1 VARCHAR(255),
+                                    city VARCHAR(100),
+                                    state VARCHAR (50),
+                                    zipCode INTEGER,
+                                    county VARCHAR(100),
+                                    longitude FLOAT,
+                                    latitude FLOAT
+                                    );
+
+                             CREATE TABLE zapbank.sales_dim(
+                                   sales_id SERIAL PRIMARY KEY,
+                                   lastSalePrice FLOAT,
+                                   lastSaleDate DATE
+                                   );
+
+                             CREATE TABLE zapbank.features_dim(
+                                    features_id SERIAL PRIMARY KEY,
+                                    features TEXT,
+                                    propertyType VARCHAR(255),
+                                    zoning VARCHAR(255)
+                                     );'''
+    cursor.execute(create_table_query)
+    conn.commit()
+    cursor.close()
+    conn.close()
+create_tables()
+
+
+#Create a funcion to load csv data from a folder into the DB
+def load_data_from_csv_to_table(csv_path,table_name):
+    conn= get_db_connection()
+    cursor = conn.cursor()
+    with open(csv_path,'r',encoding='utf-8') as file:
+        reader=csv.reader(file)
+        next(reader) #Skip the header row
+        for row in reader:
+            placeholders = ', '.join(['%s']* len(row))
+            query = f"INSERT INTO {table_name} VALUES ({placeholders});"
+            cursor.execute(query,row)
+        conn.commit()
+        cursor.close()
+        conn.close()
+# for fact table
+fact_csv_path = r'C:\Users\HP\Documents\Data Engineering Projects\property_fact.csv'
+load_data_from_csv_to_table(fact_csv_path, 'zapbank.fact_table')
+# for Location dimension table
+location_csv_path = r'C:\Users\HP\Documents\Data Engineering Projects\Location_dimension.csv'
+load_data_from_csv_to_table(location_csv_path, 'zapbank.location_dim')
+# for features dimension table
+features_csv_path = r'C:\Users\HP\Documents\Data Engineering Projects\features_dimension.csv'
+load_data_from_csv_to_table(features_csv_path, 'zapbank.features_dim')
+
+ #Create a New funcion to load csv data for sales  from a folder into the DB
+def load_data_from_csv_to_sales_table(csv_path,table_name):
+    conn= get_db_connection()
+    cursor = conn.cursor()
+    with open(csv_path,'r',encoding='utf-8') as file:
+        reader=csv.reader(file)
+        next(reader) #Skip the header row
+        for row in reader:
+            #convert empty strings (or Not available) in date column to None (NULL in sql)
+            row=[None if (cell == '' or cell =='Not Available') and col_name == 'lastSaleDate' else cell for cell, col_name in zip(row, sales_dim_columns)]
+            placeholders = ', '.join(['%s']* len(row))
+            query = f"INSERT INTO {table_name} VALUES ({placeholders});"
+            cursor.execute(query,row)
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+#define the columns names in sales_dim table
+sales_dim_columns = ['sales_id','lastSalePrice', 'lastSaleDate']
+
+
+# for sales dimension table
+sales_csv_path = r'C:\Users\HP\Documents\Data Engineering Projects\sales_dimension.csv'
+load_data_from_csv_to_sales_table(sales_csv_path, 'zapbank.sales_dim')
+print('All data has been loaded successfully into their respective schema and table')
+

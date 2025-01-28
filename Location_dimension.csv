@@ -1,0 +1,11 @@
+location_id,addressLine1,city,state,zipCode,county,longitude,latitude
+0,39 Brookside Loop,Staten Island,NY,10309,Richmond,-74.214711,40.539264
+1,12226 Jupiter Rd,Dallas,TX,75218,Dallas,-96.682812,32.861838
+2,4530 Lighthouse Cir,Orlando,FL,32808,Orange,-81.444549,28.6006
+3,221 Scott Ave,Fayetteville,NC,28301,Cumberland,-78.885794,35.080796
+4,1486 Old Janal Ranch Rd,Chula Vista,CA,91915,San Diego,-116.940505,32.634786
+5,109 1/2 E King St,Garrett,IN,46738,DeKalb,-85.135124,41.350285
+6,16607 Valerio St,Van Nuys,CA,91406,Los Angeles,-118.494983,34.205025
+7,60 E Apollo Way,Sandy,UT,84070,Salt Lake,-111.888589,40.597476
+8,718 W 12th St S,Newton,IA,50208,Jasper,-93.067158,41.692486
+9,4900 S Rio Grande Ave,Orlando,FL,32839,Orange,-81.400579,28.489655

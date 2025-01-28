@@ -1,0 +1,426 @@
+[
+    {
+        "addressLine1": "39 Brookside Loop",
+        "city": "Staten Island",
+        "state": "NY",
+        "zipCode": "10309",
+        "formattedAddress": "39 Brookside Loop, Staten Island, NY 10309",
+        "squareFootage": 2600,
+        "yearBuilt": 2011,
+        "county": "Richmond",
+        "assessorID": "07022-0053",
+        "legalDescription": "LOT:53 BLK:7022 SEC:2802 DIST:03",
+        "ownerOccupied": true,
+        "lotSize": 4792,
+        "propertyType": "Duplex-Triplex",
+        "lastSalePrice": 783991,
+        "lastSaleDate": "2013-04-29T00:00:00.000Z",
+        "features": {
+            "architectureType": "Duplex",
+            "floorCount": 2,
+            "unitCount": 2
+        },
+        "zoning": "R3X",
+        "taxAssessment": {
+            "2022": {
+                "value": 60660,
+                "land": 15300,
+                "improvements": 45360
+            },
+            "2023": {
+                "value": 56562,
+                "land": 12697,
+                "improvements": 43865
+            }
+        },
+        "propertyTaxes": {
+            "2022": {
+                "total": 10252
+            },
+            "2023": {
+                "total": 10782
+            }
+        },
+        "owner": {
+            "names": [
+                "MAN T LI"
+            ],
+            "mailingAddress": {
+                "id": "39-Brookside-Loop,-Staten-Island,-NY-10309",
+                "formattedAddress": "39 Brookside Loop, Staten Island, NY 10309",
+                "addressLine1": "39 Brookside Loop",
+                "city": "Staten Island",
+                "state": "NY",
+                "zipCode": "10309"
+            }
+        },
+        "id": "39-Brookside-Loop,-Staten-Island,-NY-10309",
+        "longitude": -74.214711,
+        "latitude": 40.539264
+    },
+    {
+        "addressLine1": "12226 Jupiter Rd",
+        "city": "Dallas",
+        "state": "TX",
+        "zipCode": "75218",
+        "formattedAddress": "12226 Jupiter Rd, Dallas, TX 75218",
+        "assessorID": "00000605260000000",
+        "bedrooms": 4,
+        "county": "Dallas",
+        "legalDescription": "GASTON PARK NO 2 BLK 12/6584 LT 28 INT202100208150 DD07092021 CO-DC 6584 012 02800 3006584 012",
+        "squareFootage": 1424,
+        "subdivision": "GASTON PARK NO 2",
+        "yearBuilt": 1953,
+        "zoning": "Z298",
+        "bathrooms": 1.5,
+        "lotSize": 7542,
+        "propertyType": "Single Family",
+        "lastSaleDate": "2021-07-13T00:00:00.000Z",
+        "ownerOccupied": true,
+        "features": {
+            "cooling": true,
+            "coolingType": "Window",
+            "exteriorType": "Other",
+            "fireplace": true,
+            "floorCount": 2,
+            "foundationType": "Slab / Mat / Raft",
+            "garage": true,
+            "garageSpaces": 1,
+            "garageType": "Attached",
+            "heating": true,
+            "heatingType": "Central",
+            "roofType": "Composition Shingle",
+            "unitCount": 1
+        },
+        "taxAssessment": {
+            "2020": {
+                "value": 131410,
+                "land": 30000,
+                "improvements": 101410
+            },
+            "2022": {
+                "value": 213220,
+                "land": 41250,
+                "improvements": 171970
+            },
+            "2023": {
+                "value": 178830,
+                "land": 41250,
+                "improvements": 137580
+            }
+        },
+        "propertyTaxes": {
+            "2020": {
+                "total": 3565
+            },
+            "2022": {
+                "total": 5353
+            },
+            "2023": {
+                "total": 4104
+            }
+        },
+        "owner": {
+            "names": [
+                "Mariano Ricardo Perez",
+                "Castaneda Maria G"
+            ],
+            "mailingAddress": {
+                "id": "12226-Jupiter-Rd,-Dallas,-TX-75218",
+                "formattedAddress": "12226 Jupiter Rd, Dallas, TX 75218",
+                "addressLine1": "12226 Jupiter Rd",
+                "city": "Dallas",
+                "state": "TX",
+                "zipCode": "75218"
+            },
+            "type": "Individual"
+        },
+        "id": "12226-Jupiter-Rd,-Dallas,-TX-75218",
+        "longitude": -96.682812,
+        "latitude": 32.861838
+    },
+    {
+        "addressLine1": "4530 Lighthouse Cir",
+        "city": "Orlando",
+        "state": "FL",
+        "zipCode": "32808",
+        "formattedAddress": "4530 Lighthouse Cir, Orlando, FL 32808",
+        "assessorID": "06-22-29-8651-06-220",
+        "county": "Orange",
+        "yearBuilt": 1981,
+        "bathrooms": 2,
+        "propertyType": "Single Family",
+        "features": {
+            "unitCount": 12
+        },
+        "id": "4530-Lighthouse-Cir,-Orlando,-FL-32808",
+        "longitude": -81.444549,
+        "latitude": 28.6006
+    },
+    {
+        "addressLine1": "221 Scott Ave",
+        "city": "Fayetteville",
+        "state": "NC",
+        "zipCode": "28301",
+        "formattedAddress": "221 Scott Ave, Fayetteville, NC 28301",
+        "assessorID": "0438-44-1365",
+        "bedrooms": 8,
+        "county": "Cumberland",
+        "legalDescription": "M D RIDDLE LO15 & 16 SE01 PL0010-0040",
+        "ownerOccupied": true,
+        "squareFootage": 3016,
+        "subdivision": "RAMSEY ST-FISHER PROPERTY",
+        "yearBuilt": 1941,
+        "zoning": "SF6",
+        "bathrooms": 4,
+        "lotSize": 17860,
+        "propertyType": "Duplex-Triplex",
+        "features": {
+            "architectureType": "Other",
+            "exteriorType": "Combination",
+            "fireplace": true,
+            "floorCount": 1,
+            "foundationType": "Stone",
+            "garage": true,
+            "garageSpaces": 2,
+            "garageType": "Carport",
+            "heating": true,
+            "roofType": "Composition Shingle"
+        },
+        "taxAssessment": {
+            "2019": {
+                "value": 93600,
+                "land": 9750,
+                "improvements": 83850
+            },
+            "2022": {
+                "value": 122411,
+                "land": 9750,
+                "improvements": 112661
+            },
+            "2023": {
+                "value": 122411,
+                "land": 9750,
+                "improvements": 112661
+            }
+        },
+        "propertyTaxes": {
+            "2020": {
+                "total": 1224
+            },
+            "2022": {
+                "total": 1224
+            },
+            "2023": {
+                "total": 2041
+            }
+        },
+        "owner": {
+            "names": [
+                "Annie Belle Mckoy"
+            ],
+            "mailingAddress": {
+                "id": "221-Scott-Ave---C,-Fayetteville,-NC-28301",
+                "formattedAddress": "221 Scott Ave # C, Fayetteville, NC 28301",
+                "addressLine1": "221 Scott Ave # C",
+                "city": "Fayetteville",
+                "state": "NC",
+                "zipCode": "28301"
+            },
+            "type": "Individual"
+        },
+        "id": "221-Scott-Ave,-Fayetteville,-NC-28301",
+        "longitude": -78.885794,
+        "latitude": 35.080796
+    },
+    {
+        "addressLine1": "1486 Old Janal Ranch Rd",
+        "city": "Chula Vista",
+        "state": "CA",
+        "zipCode": "91915",
+        "formattedAddress": "1486 Old Janal Ranch Rd, Chula Vista, CA 91915",
+        "assessorID": "643-504-22-00",
+        "bedrooms": 4,
+        "county": "San Diego",
+        "legalDescription": "TR 14376 LOT 91",
+        "ownerOccupied": true,
+        "squareFootage": 2358,
+        "subdivision": "EASTLAKE III VISTAS PHASE 1",
+        "yearBuilt": 2004,
+        "zoning": "R-1:SINGLE FAM-RES",
+        "bathrooms": 2.5,
+        "lotSize": 7131,
+        "propertyType": "Single Family",
+        "lastSalePrice": 629000,
+        "lastSaleDate": "2016-10-12T00:00:00.000Z",
+        "features": {
+            "garage": true,
+            "garageSpaces": 3,
+            "garageType": "Garage",
+            "unitCount": 1
+        },
+        "taxAssessment": {
+            "2019": {
+                "value": 654409,
+                "land": 258194,
+                "improvements": 396215
+            },
+            "2020": {
+                "value": 667496,
+                "land": 263357,
+                "improvements": 404139
+            },
+            "2023": {
+                "value": 701654,
+                "land": 276834,
+                "improvements": 424820
+            }
+        },
+        "propertyTaxes": {
+            "2019": {
+                "total": 9591
+            },
+            "2020": {
+                "total": 9827
+            },
+            "2023": {
+                "total": 10584
+            }
+        },
+        "owner": {
+            "names": [
+                "Tryus E Woodard",
+                "Susan B Woodard"
+            ],
+            "mailingAddress": {
+                "id": "1486-Old-Janal-Ranch-Rd,-Chula-Vista,-CA-91915",
+                "formattedAddress": "1486 Old Janal Ranch Rd, Chula Vista, CA 91915",
+                "addressLine1": "1486 Old Janal Ranch Rd",
+                "city": "Chula Vista",
+                "state": "CA",
+                "zipCode": "91915"
+            },
+            "type": "Individual"
+        },
+        "id": "1486-Old-Janal-Ranch-Rd,-Chula-Vista,-CA-91915",
+        "longitude": -116.940505,
+        "latitude": 32.634786
+    },
+    {
+        "county": "DeKalb",
+        "propertyType": "Condo",
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "addressLine1": "109 1/2 E King St",
+        "city": "Garrett",
+        "state": "IN",
+        "zipCode": "46738",
+        "formattedAddress": "109 1/2 E King St, Garrett, IN 46738",
+        "id": "109-1-2-E-King-St,-Garrett,-IN-46738",
+        "longitude": -85.135124,
+        "latitude": 41.350285
+    },
+    {
+        "addressLine1": "16607 Valerio St",
+        "city": "Van Nuys",
+        "state": "CA",
+        "zipCode": "91406",
+        "formattedAddress": "16607 Valerio St, Van Nuys, CA 91406",
+        "bedrooms": 2,
+        "squareFootage": 1133,
+        "yearBuilt": 1951,
+        "county": "Los Angeles",
+        "assessorID": "2226-009-019",
+        "legalDescription": "TRACT NO 16678 LOT 29",
+        "subdivision": "16678",
+        "zoning": "LAR1",
+        "ownerOccupied": true,
+        "bathrooms": 1,
+        "lotSize": 6036,
+        "propertyType": "Single Family",
+        "lastSalePrice": 536005,
+        "lastSaleDate": "2018-09-28T00:00:00.000Z",
+        "features": {
+            "architectureType": "Conventional",
+            "floorCount": 1,
+            "garage": true,
+            "garageSpaces": 1,
+            "garageType": "Garage",
+            "heating": true,
+            "heatingType": "Floor / Wall",
+            "roomCount": 6,
+            "unitCount": 1
+        },
+        "taxAssessment": {
+            "2023": {
+                "value": 574697,
+                "land": 459759,
+                "improvements": 114938
+            }
+        },
+        "propertyTaxes": {
+            "2023": {
+                "total": 7112
+            }
+        },
+        "owner": {
+            "names": [
+                "Mick Reid",
+                "Jennifer Reid"
+            ],
+            "mailingAddress": {
+                "id": "16607-Valerio-St,-Van-Nuys,-CA-91406",
+                "formattedAddress": "16607 Valerio St, Van Nuys, CA 91406",
+                "addressLine1": "16607 Valerio St",
+                "city": "Van Nuys",
+                "state": "CA",
+                "zipCode": "91406"
+            },
+            "type": "Individual"
+        },
+        "id": "16607-Valerio-St,-Van-Nuys,-CA-91406",
+        "longitude": -118.494983,
+        "latitude": 34.205025
+    },
+    {
+        "bathrooms": 2,
+        "bedrooms": 3,
+        "squareFootage": 960,
+        "county": "Salt Lake",
+        "addressLine1": "60 E Apollo Way",
+        "city": "Sandy",
+        "state": "UT",
+        "zipCode": "84070",
+        "formattedAddress": "60 E Apollo Way, Sandy, UT 84070",
+        "features": {},
+        "id": "60-E-Apollo-Way,-Sandy,-UT-84070",
+        "longitude": -111.888589,
+        "latitude": 40.597476
+    },
+    {
+        "addressLine1": "718 W 12th St S",
+        "city": "Newton",
+        "state": "IA",
+        "zipCode": "50208",
+        "formattedAddress": "718 W 12th St S, Apt A, Newton, IA 50208",
+        "addressLine2": "Apt A",
+        "county": "Jasper",
+        "features": {},
+        "id": "718-W-12th-St-S,-Apt-A,-Newton,-IA-50208",
+        "longitude": -93.067158,
+        "latitude": 41.692486
+    },
+    {
+        "addressLine1": "4900 S Rio Grande Ave",
+        "city": "Orlando",
+        "state": "FL",
+        "zipCode": "32839",
+        "formattedAddress": "4900 S Rio Grande Ave, Apt 16A, Orlando, FL 32839",
+        "addressLine2": "Apt 16A",
+        "county": "Orange",
+        "features": {},
+        "id": "4900-S-Rio-Grande-Ave,-Apt-16A,-Orlando,-FL-32839",
+        "longitude": -81.400579,
+        "latitude": 28.489655
+    }
+]

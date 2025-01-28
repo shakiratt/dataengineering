@@ -1,0 +1,9 @@
+features_id,features,propertyType,zoning
+0,"{""architectureType"": ""Duplex"", ""floorCount"": 2, ""unitCount"": 2}",Duplex-Triplex,R3X
+1,"{""cooling"": true, ""coolingType"": ""Window"", ""exteriorType"": ""Other"", ""fireplace"": true, ""floorCount"": 2, ""foundationType"": ""Slab / Mat / Raft"", ""garage"": true, ""garageSpaces"": 1, ""garageType"": ""Attached"", ""heating"": true, ""heatingType"": ""Central"", ""roofType"": ""Composition Shingle"", ""unitCount"": 1}",Single Family,Z298
+2,"{""unitCount"": 12}",Single Family,unknown
+3,"{""architectureType"": ""Other"", ""exteriorType"": ""Combination"", ""fireplace"": true, ""floorCount"": 1, ""foundationType"": ""Stone"", ""garage"": true, ""garageSpaces"": 2, ""garageType"": ""Carport"", ""heating"": true, ""roofType"": ""Composition Shingle""}",Duplex-Triplex,SF6
+4,"{""garage"": true, ""garageSpaces"": 3, ""garageType"": ""Garage"", ""unitCount"": 1}",Single Family,R-1:SINGLE FAM-RES
+5,NaN,Condo,unknown
+6,"{""architectureType"": ""Conventional"", ""floorCount"": 1, ""garage"": true, ""garageSpaces"": 1, ""garageType"": ""Garage"", ""heating"": true, ""heatingType"": ""Floor / Wall"", ""roomCount"": 6, ""unitCount"": 1}",Single Family,LAR1
+7,{},unknown,unknown
