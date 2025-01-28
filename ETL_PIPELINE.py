@@ -4,6 +4,9 @@ import json
 import pandas as pd
 import csv
 import psycopg2
+from psycopg2 import Error
+from datetime import datetime
+
 # Call API
 import requests
 url = "https://realty-mole-property-api.p.rapidapi.com/randomProperties"
@@ -150,6 +153,85 @@ def create_tables():
     cursor.close()
     conn.close()
 create_tables()
+"""
+    Load sales data from CSV to database with proper data type handling and error checking.
+    """
+
+def load_data_from_csv_to_sales_table(csv_path, table_name):
+    
+    try:
+        # Get database connection
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        # Read the CSV file using pandas
+        df = pd.read_csv(csv_path)
+        print("Original CSV Data:")
+        print(df)
+        
+        # Data type conversions
+        if 'lastSalePrice' in df.columns:
+            # Convert to float, replacing any non-numeric values with None
+            df['lastSalePrice'] = pd.to_numeric(df['lastSalePrice'], errors='coerce')
+        
+        if 'lastSaleDate' in df.columns:
+            # Replace empty strings or 'Not Available' with None
+            df['lastSaleDate'] = df['lastSaleDate'].replace(['', 'Not Available'], None)
+            # Convert to datetime, invalid parsing becomes None
+            df['lastSaleDate'] = pd.to_datetime(df['lastSaleDate'], errors='coerce')
+            # Convert timezone-aware timestamps to timezone-naive
+            df['lastSaleDate'] = df['lastSaleDate'].dt.tz_localize(None)
+
+        print(df)
+        # Iterate over each row and insert into the database
+        successful_inserts = 0
+        failed_inserts = 0
+        db_columns = list(df.columns)
+        for index, row in df.iterrows():
+            try:
+                print(row)
+                # Convert row to list and handle None values
+                row_data = [None if pd.isna(val) else val for val in row]
+                
+                # Prepare the insert statement
+                placeholders = ', '.join(['%s'] * len(row_data))
+                query = f"INSERT INTO {table_name} ({', '.join(db_columns)}) VALUES ({placeholders});"
+                
+                print(f"\nAttempting insert for row {index + 1}:")
+                print(f"Query: {query}")
+                print(f"Data: {row_data}")
+                
+                cursor.execute(query, row_data)
+                successful_inserts += 1
+                
+            except Error as e:
+                failed_inserts += 1
+                print(f"\nError inserting row {index + 1}:")
+                print(f"Data: {row_data}")
+                print(f"Error: {str(e)}")
+                continue
+        
+        # Commit the transaction
+        conn.commit()
+        
+        print(f"\nInsert Summary:")
+        print(f"Successful inserts: {successful_inserts}")
+        print(f"Failed inserts: {failed_inserts}")
+        
+    except Error as e:
+        print(f"Database error: {str(e)}")
+        if conn:
+            conn.rollback()
+    except Exception as e:
+        print(f"General error: {str(e)}")
+        if conn:
+            conn.rollback()
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
 
 
 #Create a funcion to load csv data from a folder into the DB
@@ -177,7 +259,7 @@ features_csv_path = r'C:\Users\HP\Documents\Data Engineering Projects\features_d
 load_data_from_csv_to_table(features_csv_path, 'zapbank.features_dim')
 
  #Create a New funcion to load csv data for sales  from a folder into the DB
-def load_data_from_csv_to_sales_table(csv_path,table_name):
+"""def load_data_from_csv_to_sales_table(csv_path,table_name):
     conn= get_db_connection()
     cursor = conn.cursor()
     with open(csv_path,'r',encoding='utf-8') as file:
@@ -195,7 +277,7 @@ def load_data_from_csv_to_sales_table(csv_path,table_name):
 
 #define the columns names in sales_dim table
 sales_dim_columns = ['sales_id','lastSalePrice', 'lastSaleDate']
-
+"""
 
 # for sales dimension table
 sales_csv_path = r'C:\Users\HP\Documents\Data Engineering Projects\sales_dimension.csv'
