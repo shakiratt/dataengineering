@@ -8,16 +8,28 @@ from psycopg2 import Error
 from datetime import datetime
 
 # Call API
-import requests
+"""import requests
 url = "https://realty-mole-property-api.p.rapidapi.com/randomProperties"
 
 querystring = {"limit":"1000"}
 
 headers = {
 	"x-rapidapi-key": "bc68487461mshca1d2214a6e1c46p1c3c47jsn5f4df3a84144",
-	"x-rapidapi-host": "realty-mole-property-api.p.rapidapi.com"
+	"x-rapidapi-host": "realty-mole-propertyp-api.p.rapidapi.com"
+}"""
+
+import requests
+
+url = "https://api.rentcast.io/v1/properties/random?limit=100"
+
+headers = {
+    "accept": "application/json",
+    "X-Api-Key": "44db0886c5774e4c9937071c73245d98"
 }
 
+response = requests.get(url, headers=headers)
+
+print(response.text)
 response = requests.get(url, headers=headers)
 print(response.json())
 data= response.json()
@@ -66,26 +78,26 @@ Propertyrecord_df.fillna(
 )
 
 #create the FACT Table
-fact_columns =['addressLine1','city', 'state','zipCode', 'formattedAddress',  'squareFootage', 'yearBuilt', 'bathrooms', 'bedrooms', 'lotSize', 'propertyType',
+fact_columns =['city', 'state','zipCode', 'formattedAddress',  'squareFootage', 'yearBuilt', 'bathrooms', 'bedrooms', 'lotSize', 'propertyType',
                 'longitude', 'latitude']
 fact_table = Propertyrecord_df[fact_columns]
-fact_table.to_csv(r'C:\Users\HP\Documents\Data Engineering Projects\property_fact.csv', index=False)
+fact_table.to_csv(r'C:\Users\User\Documents\Data Engineering Projects\property_fact.csv', index=False)
 
 #Create Location Dimension
-Location_dim= Propertyrecord_df[['addressLine1','city', 'state','zipCode','county','longitude', 'latitude']].drop_duplicates().reset_index(drop=True)
+Location_dim= Propertyrecord_df[['addressLine1','city', 'state','zipCode','county','longitude', 'latitude','addressLine2','subdivision']].drop_duplicates().reset_index(drop=True)
 Location_dim.index.name= 'location_id'
-Location_dim.to_csv(r'C:\Users\HP\Documents\Data Engineering Projects\Location_dimension.csv', index=True)
+Location_dim.to_csv(r'C:\Users\User\Documents\Data Engineering Projects\Location_dimension.csv', index=True)
 
 
 #Create Sales Dimension
-sales_dim = Propertyrecord_df[['lastSalePrice','lastSaleDate']].drop_duplicates().reset_index(drop=True)
+sales_dim = Propertyrecord_df[['lastSalePrice','lastSaleDate','taxAssessment','propertyTaxes']].drop_duplicates().reset_index(drop=True)
 sales_dim.index.name= 'sales_id'
-sales_dim.to_csv(r'C:\Users\HP\Documents\Data Engineering Projects\sales_dimension.csv', index=False)
+sales_dim.to_csv(r'C:\Users\User\Documents\Data Engineering Projects\sales_dimension.csv', index=False)
 
 #Create Property Features Dimension
-features_dim = Propertyrecord_df[['features', 'propertyType', 'zoning']].drop_duplicates().reset_index(drop=True)
+features_dim = Propertyrecord_df[['features', 'propertyType', 'zoning','bathrooms', 'bedrooms', 'squareFootage','propertyType','yearBuilt','ownerOccupied','lotSize']].drop_duplicates().reset_index(drop=True)
 features_dim.index.name ='features_id'
-features_dim.to_csv(r'C:\Users\HP\Documents\Data Engineering Projects\features_dimension.csv', index=True)
+features_dim.to_csv(r'C:\Users\User\Documents\Data Engineering Projects\features_dimension.csv', index=True)
 
 #Loading Layer
 # develop a function to connect to pgadmin
@@ -94,7 +106,7 @@ def get_db_connection():
         host= 'localhost',
         database='postgres',
         user='postgres',
-        password='shakirat12'
+        password='Shakirat12'
     )
     return connection
 # create Tables
@@ -110,19 +122,13 @@ def create_tables():
                             DROP TABLE IF EXISTS zapbank.features_dim;
 
                             CREATE TABLE zapbank.fact_table(
-                                addressline1 VARCHAR(255),
-                                city VARCHAR(100),
-                                state VARCHAR(50),
-                                zipCode INTEGER,
-                                formattedAddress VARCHAR(255),
-                                squareFootage FLOAT,
-                                yearBuilt FLOAT,
-                                bathrooms FLOAT,
-                                bedrooms FLOAT,
-                                lotSize FLOAT,
-                                propertyType VARCHAR(255),
-                                longitude FLOAT,
-                                latitude FLOAT
+                                fact_id  SERIAL PRIMARY KEY,
+                                sales_id,
+                                location_id,
+                                features_id,
+                                FOREIGN KEY (sales_id) REFERENCES dim_property(sales_id) ON DELETE RESTRICT,
+                                FOREIGN KEY (location_id) REFERENCES dim_property(location_id) ON DELETE RESTRICT,
+                                FOREIGN KEY (features_id) REFERENCES dim_property(features_id) ON DELETE RESTRICT,
                                 );
 
                             CREATE TABLE zapbank.location_dim(
@@ -133,20 +139,32 @@ def create_tables():
                                     zipCode INTEGER,
                                     county VARCHAR(100),
                                     longitude FLOAT,
+                                    subdivision INT,
                                     latitude FLOAT
                                     );
 
                              CREATE TABLE zapbank.sales_dim(
                                    sales_id SERIAL PRIMARY KEY,
                                    lastSalePrice FLOAT,
-                                   lastSaleDate DATE
+                                   taxAssessment FLOAT, 
+                                   propertyTaxes FLOAT,
+                                  lastSaleDate DATE
                                    );
 
                              CREATE TABLE zapbank.features_dim(
                                     features_id SERIAL PRIMARY KEY,
                                     features TEXT,
-                                    propertyType VARCHAR(255),
-                                    zoning VARCHAR(255)
+                                    bathroom FLOAT,
+                                    bedrooms, FLOAT,
+                                    yearBuilt FLOAT,
+                                    ownerOccupied INT,
+                                    squareFootage FLOAT,
+                                  yearBuilt FLOAT,
+                                  bathrooms FLOAT,
+                                  bedrooms FLOAT,
+                                  lotSize FLOAT,
+                                propertyType VARCHAR(255),
+                                zoning VARCHAR(255)
                                      );'''
     cursor.execute(create_table_query)
     conn.commit()
@@ -249,13 +267,13 @@ def load_data_from_csv_to_table(csv_path,table_name):
         cursor.close()
         conn.close()
 # for fact table
-fact_csv_path = r'C:\Users\HP\Documents\Data Engineering Projects\property_fact.csv'
+fact_csv_path = r'C:\Users\User\Documents\Data Engineering Projects\property_fact.csv'
 load_data_from_csv_to_table(fact_csv_path, 'zapbank.fact_table')
 # for Location dimension table
-location_csv_path = r'C:\Users\HP\Documents\Data Engineering Projects\Location_dimension.csv'
+location_csv_path = r'C:\Users\User\Documents\Data Engineering Projects\Location_dimension.csv'
 load_data_from_csv_to_table(location_csv_path, 'zapbank.location_dim')
 # for features dimension table
-features_csv_path = r'C:\Users\HP\Documents\Data Engineering Projects\features_dimension.csv'
+features_csv_path = r'C:\Users\User\Documents\Data Engineering Projects\features_dimension.csv'
 load_data_from_csv_to_table(features_csv_path, 'zapbank.features_dim')
 
  #Create a New funcion to load csv data for sales  from a folder into the DB
@@ -280,7 +298,7 @@ sales_dim_columns = ['sales_id','lastSalePrice', 'lastSaleDate']
 """
 
 # for sales dimension table
-sales_csv_path = r'C:\Users\HP\Documents\Data Engineering Projects\sales_dimension.csv'
+sales_csv_path = r'C:\Users\User\Documents\Data Engineering Projects\sales_dimension.csv'
 load_data_from_csv_to_sales_table(sales_csv_path, 'zapbank.sales_dim')
 print('All data has been loaded successfully into their respective schema and table')
 
