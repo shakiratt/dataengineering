@@ -7,20 +7,9 @@ import psycopg2
 from psycopg2 import Error
 from datetime import datetime
 import sys
+import requests
 
-
-# # Call API
-# """import requests
-# url = "https://realty-mole-property-api.p.rapidapi.com/randomProperties"
-
-# querystring = {"limit":"1000"}
-
-# headers = {
-# 	"x-rapidapi-key": "bc68487461mshca1d2214a6e1c46p1c3c47jsn5f4df3a84144",
-# 	"x-rapidapi-host": "realty-mole-propertyp-api.p.rapidapi.com"
-# }"""
-
-# '''import requests
+#Call API 
 
 # url = "https://api.rentcast.io/v1/properties/random?limit=100"
 
@@ -38,7 +27,7 @@ import sys
 # #Saving into a file
 # filename = "PropertyRecords.json"
 # with open(filename,"w") as file:
-#     json.dump(data,file,indent=4)'''
+#     json.dump(data,file,indent=4)
 
 #Read into a dataframe
 Propertyrecord_df = pd.read_json('PropertyRecords.json')
@@ -79,15 +68,11 @@ Propertyrecord_df.fillna(
     inplace=True
 )
 
-#create the FACT Table
-fact_table = Propertyrecord_df['id']
-fact_table.index.name= 'fact_id'
-fact_table.to_csv(r'C:\Users\HP\Documents\Data Engineering Projects\property_fact.csv', index=False)
 
 #Create Location Dimension
 Location_dim= Propertyrecord_df[['addressLine1','city', 'state','zipCode','county','longitude', 'latitude','addressLine2','subdivision']].drop_duplicates().reset_index(drop=True)
 Location_dim.index.name= 'location_id'
-Location_dim.to_csv(r'C:\Users\HP\Documents\Data Engineering Projects\Location_dimension.csv', index=True)
+Location_dim.to_csv(r'C:\Users\USER\Documents\Data Engineering Projects\Location_dimension.csv', index=True)
 
 
 #Create Sales Dimension
@@ -96,12 +81,18 @@ sales_dim = Propertyrecord_df[['lastSalePrice','lastSaleDate']]
 print(sales_dim)
 #sys.exit
 sales_dim.index.name= 'sales_id'
-sales_dim.to_csv(r'C:\Users\HP\Documents\Data Engineering Projects\sales_dimension.csv', index=False)
+sales_dim.to_csv(r'C:\Users\USER\Documents\Data Engineering Projects\sales_dimension.csv', index=False)
 
 #Create Property Features Dimension
 features_dim = Propertyrecord_df[['features', 'propertyType', 'zoning','bathrooms', 'bedrooms', 'squareFootage','yearBuilt','ownerOccupied','lotSize']].drop_duplicates().reset_index(drop=True)
 features_dim.index.name ='features_id'
-features_dim.to_csv(r'C:\Users\HP\Documents\Data Engineering Projects\features_dimension.csv', index=True)
+features_dim.to_csv(r'C:\Users\USER\Documents\Data Engineering Projects\features_dimension.csv', index=True)
+
+
+#create the FACT Table
+fact_table = Propertyrecord_df['id']
+fact_table.index.name= 'fact_id'
+fact_table.to_csv(r'C:\Users\USER\Documents\Data Engineering Projects\property_fact.csv', index=False)
 
 #Loading Layer
 # develop a function to connect to pgadmin
@@ -110,7 +101,7 @@ def get_db_connection():
         host= 'localhost',
         database='postgres',
         user='postgres',
-        password='shakirat12'
+        password='Shakirat12'
     )
     return connection
 # create Tables
@@ -273,13 +264,13 @@ def load_data_from_csv_to_table(csv_path,table_name):
         cursor.close()
         conn.close()
 # for fact table
-fact_csv_path = r'C:\Users\HP\Documents\Data Engineering Projects\property_fact.csv'
+fact_csv_path = r'C:\Users\USER\Documents\Data Engineering Projects\property_fact.csv'
 load_data_from_csv_to_table(fact_csv_path, 'zapbank.fact_table')
 # for Location dimension table
-location_csv_path = r'C:\Users\HP\Documents\Data Engineering Projects\Location_dimension.csv'
+location_csv_path = r'C:\Users\USER\Documents\Data Engineering Projects\Location_dimension.csv'
 load_data_from_csv_to_table(location_csv_path, 'zapbank.location_dim')
 # for features dimension table
-features_csv_path = r'C:\Users\HP\Documents\Data Engineering Projects\features_dimension.csv'
+features_csv_path = r'C:\Users\USER\Documents\Data Engineering Projects\features_dimension.csv'
 load_data_from_csv_to_table(features_csv_path, 'zapbank.features_dim')
 
  #Create a New funcion to load csv data for sales  from a folder into the DB
@@ -304,7 +295,7 @@ sales_dim_columns = ['sales_id','lastSalePrice', 'lastSaleDate']
 """
 
 # for sales dimension table
-sales_csv_path = r'C:\Users\HP\Documents\Data Engineering Projects\sales_dimension.csv'
+sales_csv_path = r'C:\Users\USER\Documents\Data Engineering Projects\sales_dimension.csv'
 load_data_from_csv_to_sales_table(sales_csv_path, 'zapbank.sales_dim')
 print('All data has been loaded successfully into their respective schema and table')
 
